@@ -30,7 +30,7 @@ var SCENE3D = (function () {
   var clock = null;
   var time = 0;
 
-  var cam = { yaw: -0.24, pitch: 0.96, dist: 18, tYaw: -0.24, tPitch: 0.96, tDist: 18 };
+  var cam = { yaw: -0.24, pitch: 0.90, dist: 18, tYaw: -0.24, tPitch: 0.90, tDist: 18 };
   var target = new THREE.Vector3(0, -0.15, 0);
   var introDone = false;
   var tmpCam = null;
@@ -466,7 +466,7 @@ var SCENE3D = (function () {
     var w = v.w, h = v.h;
     var portrait = h > w * 1.05;
     camera.aspect = w / h;
-    cam.tPitch = portrait ? 1.22 : 0.96;
+    cam.tPitch = portrait ? 1.22 : 0.90;
     if (!introDone && !hasInteracted) { cam.pitch = cam.tPitch; }
     camera.updateProjectionMatrix();
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
@@ -511,7 +511,7 @@ var SCENE3D = (function () {
     }
 
     var maxX = h > w * 1.05 ? 0.92 : 0.90;
-    var maxY = h > w * 1.05 ? 0.78 : 0.74;
+    var maxY = h > w * 1.05 ? 0.80 : 0.78;
     var d = 9;
     for (var it = 0; it < 80; it++) {
       tmpCam.position.set(

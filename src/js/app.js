@@ -397,10 +397,10 @@
     document.body.classList.add('intro');
 
     window.addEventListener('error', function (ev) {
-      if (window.GOMOKU) window.GOMOKU.errs.push(String(ev.message));
+      API.errs.push(String(ev.message));
     });
     window.addEventListener('unhandledrejection', function (ev) {
-      if (window.GOMOKU) window.GOMOKU.errs.push('promise: ' + String(ev.reason));
+      API.errs.push('promise: ' + String(ev.reason));
     });
 
     SCENE3D.init(el.canvas);
@@ -466,10 +466,11 @@
 
     updateUI();
     SCENE3D.fitView(false);
+    window.GOMOKU = API;   // 初始化完成后再暴露调试/自动化接口
   }
 
   /* ---------------- 调试 / 自动化接口 ---------------- */
-  window.GOMOKU = {
+  var API = {
     errs: [],
     ready: true,
     get state() {
