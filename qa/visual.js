@@ -7,7 +7,7 @@ const { chromium } = require('/Users/Apple/.npm-global/lib/node_modules/playwrig
   });
 
   const page = await browser.newPage({ viewport: { width: 1280, height: 800 }, deviceScaleFactor: 1.5 });
-  await page.goto('http://127.0.0.1:8123/index.html', { waitUntil: 'load' });
+  await page.goto('http://127.0.0.1:8123/index.html', { waitUntil: 'commit' });
   await page.waitForTimeout(1200);
   await page.screenshot({ path: 'qa/v0-start.png' });
   await page.evaluate(() => GOMOKU.start());
@@ -22,7 +22,7 @@ const { chromium } = require('/Users/Apple/.npm-global/lib/node_modules/playwrig
   console.log(JSON.stringify(await page.evaluate(() => ({ cam: GOMOKU.cam(), stats: GOMOKU.stats() }))));
 
   const m = await browser.newPage({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
-  await m.goto('http://127.0.0.1:8123/index.html', { waitUntil: 'load' });
+  await m.goto('http://127.0.0.1:8123/index.html', { waitUntil: 'commit' });
   await m.waitForTimeout(1200);
   await m.evaluate(() => GOMOKU.start());
   await m.waitForTimeout(900);

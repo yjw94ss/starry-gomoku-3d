@@ -11,7 +11,8 @@ const URL = 'http://127.0.0.1:8123/index.html';
   page.on('pageerror', e => errs.push('PAGEERROR ' + e.message));
   page.on('console', m => { if (m.type() === 'error') errs.push('ERROR ' + m.text()); });
 
-  await page.goto(URL, { waitUntil: 'load' });
+  await page.goto(URL, { waitUntil: 'commit' });
+  await page.waitForFunction(() => !!window.GOMOKU, null, { timeout: 60000 });
   await page.waitForTimeout(1200);
   await page.evaluate(() => GOMOKU.start());
   await page.waitForTimeout(500);

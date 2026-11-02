@@ -4,7 +4,8 @@ const ARGS = ['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swifts
 async function run(opts, fn) {
   const b = await chromium.launch({ channel: 'chrome', headless: true, args: ARGS });
   const p = await b.newPage(opts);
-  await p.goto('http://127.0.0.1:8123/index.html', { waitUntil: 'load' });
+  await p.goto('http://127.0.0.1:8123/index.html', { waitUntil: 'commit' });
+  await p.waitForFunction(() => !!window.GOMOKU, null, { timeout: 60000 });
   await p.waitForTimeout(1300);
   await fn(p);
   await b.close();

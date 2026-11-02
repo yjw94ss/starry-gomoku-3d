@@ -28,7 +28,8 @@ async function clickCell(page, x, y) {
     if (t === 'warning' && !/deprecated with r150|GL Driver Message|sigmaRadians/.test(txt)) errors.push('WARN: ' + txt);
   });
 
-  await page.goto(URL, { waitUntil: 'load' });
+  await page.goto(URL, { waitUntil: 'commit' });
+  await page.waitForFunction(() => !!window.GOMOKU, null, { timeout: 60000 });
   await page.waitForTimeout(2000);
   console.log('BOOT ' + JSON.stringify(await page.evaluate(() => ({
     api: !!window.GOMOKU, errs: GOMOKU.errs, stats: GOMOKU.stats(), cam: GOMOKU.cam()
@@ -107,7 +108,7 @@ async function clickCell(page, x, y) {
   const merrors = [];
   m.on('pageerror', e => merrors.push('PAGEERROR: ' + e.message));
   m.on('console', x => { if (x.type() === 'error') merrors.push('ERROR: ' + x.text()); });
-  await m.goto(URL, { waitUntil: 'load' });
+  await m.goto(URL, { waitUntil: 'commit' });
   await m.waitForTimeout(1800);
   await shot(m, '06-mobile-start');
   await m.tap('#startBtn');
