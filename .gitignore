@@ -1,0 +1,9 @@
+.DS_Store
+._*
+Thumbs.db
+
+# 验收截图（体积大，本地保留即可）
+qa/*.png
+qa/shots/
+
+node_modules/
