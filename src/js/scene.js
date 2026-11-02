@@ -415,9 +415,9 @@ var SCENE3D = (function () {
     sun = new THREE.DirectionalLight(0xfff0d8, 2.0);
     sun.position.set(-9.5, 19, 11);
     sun.castShadow = true;
-    sun.shadow.mapSize.set(1024, 1024);
+    sun.shadow.mapSize.set(1536, 1536);
     var sc = sun.shadow.camera;
-    sc.left = -8.6; sc.right = 8.6; sc.top = 8.6; sc.bottom = -8.6; sc.near = 2; sc.far = 50;
+    sc.left = -7.6; sc.right = 7.6; sc.top = 7.6; sc.bottom = -7.6; sc.near = 2; sc.far = 50;
     sun.shadow.bias = -0.0004;
     sun.shadow.normalBias = 0.03;
     scene.add(sun);
