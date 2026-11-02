@@ -5,7 +5,7 @@
 var LOGIC = (function () {
   'use strict';
 
-  var N = 9;
+  var N = 15;
   var DIRS = [[1, 0], [0, 1], [1, 1], [1, -1]];
 
   function idx(x, y) { return y * N + x; }
@@ -86,13 +86,14 @@ var LOGIC = (function () {
         if (near) list.push({ x: x, y: y });
       }
     }
-    if (!list.length) list.push({ x: 4, y: 4 });
+    if (!list.length) list.push({ x: (N - 1) >> 1, y: (N - 1) >> 1 });
     return list;
   }
 
   function centerBias(x, y) {
-    var d = Math.abs(x - 4) + Math.abs(y - 4);
-    return Math.max(0, 30 - d * 6);
+    var c = (N - 1) / 2;
+    var d = Math.abs(x - c) + Math.abs(y - c);
+    return Math.max(0, 30 - d * 2.4);
   }
 
   function pickRandom(arr) { return arr[(Math.random() * arr.length) | 0]; }

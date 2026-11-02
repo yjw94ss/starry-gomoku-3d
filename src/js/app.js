@@ -4,7 +4,7 @@
 (function () {
   'use strict';
 
-  var N = 9;
+  var N = 15;
 
   var state = {
     board: LOGIC.create(),

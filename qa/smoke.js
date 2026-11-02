@@ -48,7 +48,7 @@ async function clickCell(page, x, y) {
   await page.mouse.click(c.x, c.y);
   await page.waitForTimeout(1500);
   const s1 = await page.evaluate(() => GOMOKU.state);
-  console.log('CLICK ' + JSON.stringify({ center: s1.board[40], turn: s1.turn, moves: s1.history.length }));
+  console.log('CLICK ' + JSON.stringify({ cell44: s1.board[4 * 15 + 4], turn: s1.turn, moves: s1.history.length }));
 
   // 电脑应已落子
   await page.waitForTimeout(1200);

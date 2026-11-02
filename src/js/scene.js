@@ -5,15 +5,15 @@
 var SCENE3D = (function () {
   'use strict';
 
-  var N = 9;
-  var CELL = 1.05;
+  var N = 15;
+  var CELL = 0.64;
   var HALF = (N - 1) / 2;          // 4
   var BOARD_W = 10.4;
   var FACE_W = BOARD_W - 0.22;
   var BOARD_T = 0.7;               // 棋盘厚度
   var PLINTH_W = 11.2;             // 底座宽度
   var PLINTH_T = 1.5;
-  var STONE_R = 0.40;
+  var STONE_R = 0.275;
   var SQUASH = 0.56;
   var STONE_Y = STONE_R * SQUASH;
 
@@ -127,13 +127,13 @@ var SCENE3D = (function () {
       g.stroke();
     }
 
-    var inset = 26;
+    var inset = 24;
     g.strokeStyle = 'rgba(140,90,45,0.3)';
     g.lineWidth = 5;
     g.strokeRect(inset, inset, S - inset * 2, S - inset * 2);
 
     g.strokeStyle = 'rgba(104,66,33,0.92)';
-    g.lineWidth = 4.5;
+    g.lineWidth = 3.8;
     g.lineCap = 'round';
     for (var k = 0; k < N; k++) {
       var v = (k - HALF) * CELL;
@@ -147,11 +147,12 @@ var SCENE3D = (function () {
       g.stroke();
     }
 
-    var stars = [[2, 2], [6, 2], [2, 6], [6, 6], [4, 4]];
+    var stars = [], sp3 = [3, 7, 11];
+    for (var si = 0; si < 3; si++) { for (var sj = 0; sj < 3; sj++) stars.push([sp3[si], sp3[sj]]); }
     g.fillStyle = 'rgba(96,60,28,0.95)';
     for (var s = 0; s < stars.length; s++) {
       g.beginPath();
-      g.arc(px((stars[s][0] - HALF) * CELL), px((stars[s][1] - HALF) * CELL), 7.5, 0, Math.PI * 2);
+      g.arc(px((stars[s][0] - HALF) * CELL), px((stars[s][1] - HALF) * CELL), 4.8, 0, Math.PI * 2);
       g.fill();
     }
 
@@ -310,7 +311,7 @@ var SCENE3D = (function () {
     scene.add(ghost);
 
     ghostRing = new THREE.Mesh(
-      new THREE.TorusGeometry(0.5, 0.035, 6, 28),
+      new THREE.TorusGeometry(0.31, 0.022, 6, 28),
       new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.8, depthWrite: false })
     );
     ghostRing.rotation.x = -Math.PI / 2;
@@ -318,7 +319,7 @@ var SCENE3D = (function () {
     scene.add(ghostRing);
 
     lastRing = new THREE.Mesh(
-      new THREE.TorusGeometry(0.52, 0.045, 6, 28),
+      new THREE.TorusGeometry(0.33, 0.028, 6, 28),
       new THREE.MeshBasicMaterial({ color: 0xff9f43, transparent: true, opacity: 0.95, depthWrite: false })
     );
     lastRing.rotation.x = -Math.PI / 2;
@@ -338,7 +339,7 @@ var SCENE3D = (function () {
     geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
     geo.setAttribute('color', new THREE.BufferAttribute(col, 3));
     var mat = new THREE.PointsMaterial({
-      size: 0.3, map: dotTexture(), vertexColors: true, transparent: true,
+      size: 0.2, map: dotTexture(), vertexColors: true, transparent: true,
       depthWrite: false, blending: THREE.AdditiveBlending, sizeAttenuation: true
     });
     var pts = new THREE.Points(geo, mat);
@@ -354,9 +355,9 @@ var SCENE3D = (function () {
       var a = Math.random() * Math.PI * 2;
       var up = 0.6 + Math.random() * 1.6;
       var sp = (0.9 + Math.random() * 2.8) * (strength || 1);
-      spark.pos[i * 3] = cx + (Math.random() - 0.5) * 0.4;
+      spark.pos[i * 3] = cx + (Math.random() - 0.5) * 0.25;
       spark.pos[i * 3 + 1] = cy + 0.1;
-      spark.pos[i * 3 + 2] = cz + (Math.random() - 0.5) * 0.4;
+      spark.pos[i * 3 + 2] = cz + (Math.random() - 0.5) * 0.25;
       spark.vel[i * 3] = Math.cos(a) * sp;
       spark.vel[i * 3 + 1] = up * sp * 0.85;
       spark.vel[i * 3 + 2] = Math.sin(a) * sp;
@@ -591,7 +592,7 @@ var SCENE3D = (function () {
     stoneMeshes[keyOf(x, y)] = m;
 
     if (animate) {
-      var fromY = STONE_Y + 4.6;
+      var fromY = STONE_Y + 3.2;
       m.position.y = fromY;
       m.scale.setScalar(0.86);
       tween(0.36, function (k) {
@@ -640,7 +641,7 @@ var SCENE3D = (function () {
     ghost.visible = true;
     ghostRing.visible = true;
     ghost.position.set(cellX(cell.x), STONE_Y, cellZ(cell.y));
-    ghostRing.position.set(cellX(cell.x), 0.03, cellZ(cell.y));
+    ghostRing.position.set(cellX(cell.x), 0.02, cellZ(cell.y));
     matGhost.color.setHex(player === 1 ? 0x1f1b2b : 0xfaf5e9);
     matGhost.opacity = player === 1 ? 0.26 : 0.55;
     ghostRing.material.color.setHex(player === 1 ? 0xffc94d : 0x57b6ff);
@@ -653,7 +654,7 @@ var SCENE3D = (function () {
   function setLast(cell) {
     if (!cell) { lastRing.visible = false; return; }
     lastRing.visible = true;
-    lastRing.position.set(cellX(cell.x), 0.045, cellZ(cell.y));
+    lastRing.position.set(cellX(cell.x), 0.03, cellZ(cell.y));
     lastRing.scale.setScalar(0.1);
     tween(0.35, function (k) {
       lastRing.scale.setScalar(lerp(0.1, 1, easeOutBack(k)));
@@ -685,21 +686,21 @@ var SCENE3D = (function () {
 
     var g = new THREE.Group();
     var glow = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.3, 0.3, len, 12, 1, true),
+      new THREE.CylinderGeometry(0.19, 0.19, len, 12, 1, true),
       new THREE.MeshBasicMaterial({
         color: 0xffc247, transparent: true, opacity: 0.2,
         blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide
       })
     );
     var core = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.075, 0.075, len, 8, 1, true),
+      new THREE.CylinderGeometry(0.05, 0.05, len, 8, 1, true),
       new THREE.MeshBasicMaterial({
         color: 0xfff0b8, transparent: true, opacity: 0.8,
         blending: THREE.AdditiveBlending, depthWrite: false
       })
     );
     g.add(glow); g.add(core);
-    g.position.set((ax + bx) / 2, STONE_Y + 0.14, (az + bz) / 2);
+    g.position.set((ax + bx) / 2, STONE_Y + 0.09, (az + bz) / 2);
     var dir = new THREE.Vector3(bx - ax, 0, bz - az).normalize();
     g.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir);
     g.scale.set(1, 0.01, 1);
@@ -708,14 +709,14 @@ var SCENE3D = (function () {
 
     for (var i = 0; i < cells.length; i++) {
       var ring = new THREE.Mesh(
-        new THREE.TorusGeometry(0.56, 0.05, 6, 30),
+        new THREE.TorusGeometry(0.35, 0.03, 6, 30),
         new THREE.MeshBasicMaterial({
           color: 0xffc94d, transparent: true, opacity: 0.9,
           blending: THREE.AdditiveBlending, depthWrite: false
         })
       );
       ring.rotation.x = -Math.PI / 2;
-      ring.position.set(cellX(cells[i][0]), 0.06, cellZ(cells[i][1]));
+      ring.position.set(cellX(cells[i][0]), 0.04, cellZ(cells[i][1]));
       ring.scale.setScalar(0.01);
       ring.userData.delay = i * 0.07;
       ring.userData.t = 0;
@@ -768,7 +769,7 @@ var SCENE3D = (function () {
     }
 
     if (ghost.visible) {
-      ghost.position.y = STONE_Y + 0.06 + Math.sin(time * 3.4) * 0.05;
+      ghost.position.y = STONE_Y + 0.04 + Math.sin(time * 3.4) * 0.035;
       ghostRing.scale.setScalar(1 + Math.sin(time * 3.4) * 0.05);
     }
 
@@ -795,7 +796,7 @@ var SCENE3D = (function () {
       if (!Object.prototype.hasOwnProperty.call(stoneMeshes, sk)) continue;
       var sm = stoneMeshes[sk];
       if (sm.userData.lift) {
-        sm.position.y = STONE_Y + 0.12 + Math.sin(time * 2.4 + sm.position.x) * 0.06;
+        sm.position.y = STONE_Y + 0.08 + Math.sin(time * 2.4 + sm.position.x) * 0.04;
       }
     }
 
