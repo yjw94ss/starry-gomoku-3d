@@ -201,24 +201,27 @@ body.intro .ui { opacity: 0; }
 
 .bottom {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 11px;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .turn {
   display: flex;
   align-items: center;
   gap: 9px;
-  padding: 9px 18px;
+  padding: 10px 17px;
   background: var(--glass);
   border: 1px solid var(--stroke);
-  border-radius: 999px;
+  border-radius: 15px;
   box-shadow: var(--shadow);
-  font-size: 14px;
+  font-size: 13.5px;
   font-weight: 700;
   backdrop-filter: blur(16px) saturate(1.2);
   -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  white-space: nowrap;
 }
 
 .dot {
@@ -244,13 +247,8 @@ body.intro .ui { opacity: 0; }
   border: 2px dashed #b6c4d2;
 }
 
-.actions {
-  display: flex;
-  gap: 10px;
-}
-
-.actions button {
-  padding: 11px 24px;
+.bottom button {
+  padding: 11px 20px;
   border-radius: 15px;
   background: var(--glass);
   border: 1px solid var(--stroke);
@@ -263,14 +261,14 @@ body.intro .ui { opacity: 0; }
   transition: transform 0.12s, opacity 0.2s;
 }
 
-.actions button:active { transform: scale(0.95); }
-.actions button:disabled { opacity: 0.38; pointer-events: none; }
+.bottom button:active { transform: scale(0.95); }
+.bottom button:disabled { opacity: 0.38; pointer-events: none; }
 
 /* ---------------- 提示条 ---------------- */
 .toast {
   position: fixed;
   left: 50%;
-  bottom: 132px;
+  bottom: 86px;
   transform: translate(-50%, 10px);
   padding: 9px 18px;
   border-radius: 999px;
@@ -495,17 +493,18 @@ body.intro .ui { opacity: 0; }
   .modes { padding: 3px; }
   .modes button { padding: 6px 10px; font-size: 12px; }
   .icon { width: 34px; height: 34px; border-radius: 12px; font-size: 14px; }
-  .actions button { padding: 10px 20px; font-size: 13.5px; }
-  .turn { font-size: 13px; padding: 8px 15px; }
+  .bottom button { padding: 10px 15px; font-size: 13px; border-radius: 13px; }
+  .turn { font-size: 12.5px; padding: 9px 12px; gap: 7px; border-radius: 13px; }
+  .dot { width: 14px; height: 14px; }
   .hint { top: 68px; font-size: 11px; }
-  .toast { bottom: 124px; font-size: 12px; }
+  .toast { bottom: 78px; font-size: 12px; }
   .card h2 { font-size: 22px; }
 }
 
 @media (max-height: 480px) {
   .brand p, .hint, .start-inner .stone-row, .tip { display: none; }
   .bottom { gap: 8px; }
-  .actions button { padding: 9px 18px; }
+  .bottom button { padding: 9px 14px; }
 }
 
 </style>
@@ -536,10 +535,8 @@ body.intro .ui { opacity: 0; }
 
   <footer class="bottom">
     <div class="turn"><i class="dot black" id="turnDot"></i><span id="turnText">轮到 小黑 落子</span></div>
-    <div class="actions">
-      <button id="btnUndo">悔棋</button>
-      <button id="btnRestart">重开一局</button>
-    </div>
+    <button id="btnUndo">悔棋</button>
+    <button id="btnRestart">重开一局</button>
   </footer>
 </div>
 
@@ -733,10 +730,10 @@ var SCENE3D = (function () {
   var N = 9;
   var CELL = 1.05;
   var HALF = (N - 1) / 2;          // 4
-  var BOARD_W = 11.2;
+  var BOARD_W = 10.4;
   var FACE_W = BOARD_W - 0.22;
   var BOARD_T = 0.7;               // 棋盘厚度
-  var PLINTH_W = 12.9;             // 底座宽度
+  var PLINTH_W = 11.2;             // 底座宽度
   var PLINTH_T = 1.5;
   var STONE_R = 0.40;
   var SQUASH = 0.56;
@@ -1128,7 +1125,7 @@ var SCENE3D = (function () {
     scene = new THREE.Scene();
     scene.fog = new THREE.Fog(0xd6ecff, 55, 150);
 
-    camera = new THREE.PerspectiveCamera(42, 1, 0.1, 400);
+    camera = new THREE.PerspectiveCamera(36, 1, 0.1, 400);
     camera.position.set(0, 18, 18);
 
     scene.environment = buildEnv();
@@ -1235,8 +1232,8 @@ var SCENE3D = (function () {
       }
     }
 
-    var maxX = h > w * 1.05 ? 0.88 : 0.84;
-    var maxY = h > w * 1.05 ? 0.70 : 0.58;
+    var maxX = h > w * 1.05 ? 0.92 : 0.90;
+    var maxY = h > w * 1.05 ? 0.78 : 0.74;
     var d = 9;
     for (var it = 0; it < 80; it++) {
       tmpCam.position.set(

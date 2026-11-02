@@ -8,10 +8,10 @@ var SCENE3D = (function () {
   var N = 9;
   var CELL = 1.05;
   var HALF = (N - 1) / 2;          // 4
-  var BOARD_W = 11.2;
+  var BOARD_W = 10.4;
   var FACE_W = BOARD_W - 0.22;
   var BOARD_T = 0.7;               // 棋盘厚度
-  var PLINTH_W = 12.9;             // 底座宽度
+  var PLINTH_W = 11.2;             // 底座宽度
   var PLINTH_T = 1.5;
   var STONE_R = 0.40;
   var SQUASH = 0.56;
@@ -403,7 +403,7 @@ var SCENE3D = (function () {
     scene = new THREE.Scene();
     scene.fog = new THREE.Fog(0xd6ecff, 55, 150);
 
-    camera = new THREE.PerspectiveCamera(42, 1, 0.1, 400);
+    camera = new THREE.PerspectiveCamera(36, 1, 0.1, 400);
     camera.position.set(0, 18, 18);
 
     scene.environment = buildEnv();
@@ -510,8 +510,8 @@ var SCENE3D = (function () {
       }
     }
 
-    var maxX = h > w * 1.05 ? 0.88 : 0.84;
-    var maxY = h > w * 1.05 ? 0.70 : 0.58;
+    var maxX = h > w * 1.05 ? 0.92 : 0.90;
+    var maxY = h > w * 1.05 ? 0.78 : 0.74;
     var d = 9;
     for (var it = 0; it < 80; it++) {
       tmpCam.position.set(

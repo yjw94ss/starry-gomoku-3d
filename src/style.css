@@ -191,24 +191,27 @@ body.intro .ui { opacity: 0; }
 
 .bottom {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 11px;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .turn {
   display: flex;
   align-items: center;
   gap: 9px;
-  padding: 9px 18px;
+  padding: 10px 17px;
   background: var(--glass);
   border: 1px solid var(--stroke);
-  border-radius: 999px;
+  border-radius: 15px;
   box-shadow: var(--shadow);
-  font-size: 14px;
+  font-size: 13.5px;
   font-weight: 700;
   backdrop-filter: blur(16px) saturate(1.2);
   -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  white-space: nowrap;
 }
 
 .dot {
@@ -234,13 +237,8 @@ body.intro .ui { opacity: 0; }
   border: 2px dashed #b6c4d2;
 }
 
-.actions {
-  display: flex;
-  gap: 10px;
-}
-
-.actions button {
-  padding: 11px 24px;
+.bottom button {
+  padding: 11px 20px;
   border-radius: 15px;
   background: var(--glass);
   border: 1px solid var(--stroke);
@@ -253,14 +251,14 @@ body.intro .ui { opacity: 0; }
   transition: transform 0.12s, opacity 0.2s;
 }
 
-.actions button:active { transform: scale(0.95); }
-.actions button:disabled { opacity: 0.38; pointer-events: none; }
+.bottom button:active { transform: scale(0.95); }
+.bottom button:disabled { opacity: 0.38; pointer-events: none; }
 
 /* ---------------- 提示条 ---------------- */
 .toast {
   position: fixed;
   left: 50%;
-  bottom: 132px;
+  bottom: 86px;
   transform: translate(-50%, 10px);
   padding: 9px 18px;
   border-radius: 999px;
@@ -485,15 +483,16 @@ body.intro .ui { opacity: 0; }
   .modes { padding: 3px; }
   .modes button { padding: 6px 10px; font-size: 12px; }
   .icon { width: 34px; height: 34px; border-radius: 12px; font-size: 14px; }
-  .actions button { padding: 10px 20px; font-size: 13.5px; }
-  .turn { font-size: 13px; padding: 8px 15px; }
+  .bottom button { padding: 10px 15px; font-size: 13px; border-radius: 13px; }
+  .turn { font-size: 12.5px; padding: 9px 12px; gap: 7px; border-radius: 13px; }
+  .dot { width: 14px; height: 14px; }
   .hint { top: 68px; font-size: 11px; }
-  .toast { bottom: 124px; font-size: 12px; }
+  .toast { bottom: 78px; font-size: 12px; }
   .card h2 { font-size: 22px; }
 }
 
 @media (max-height: 480px) {
   .brand p, .hint, .start-inner .stone-row, .tip { display: none; }
   .bottom { gap: 8px; }
-  .actions button { padding: 9px 18px; }
+  .bottom button { padding: 9px 14px; }
 }
